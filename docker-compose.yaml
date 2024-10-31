@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  app:
+    container_name: "app"
+    image: task:6
+    environment:
+      - SQLALCHEMY_DATABASE_URL = "sqlite:///./users.db"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - custom
+    depends_on:
+      - sqlite3
+  sqlite3:
+    image: jitesoft/sqlite:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./users.db/:/root/app/users.db
+    networks:
+      - custom
+networks:
+  custom:
+    driver: bridge
