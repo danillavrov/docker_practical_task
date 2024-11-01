@@ -1,27 +1,50 @@
 version: "3.7"
 services:
+
+
   app:
     container_name: "app"
     image: task:6
     environment:
-      - SQLALCHEMY_DATABASE_URL = "sqlite:///./users.db"
+#     - SQLALCHEMY_DATABASE_URL = "sqlite:///./users.db"
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: users.db
+      DATABASE_USER: user
+      DATABASE_PASSWORD: password
+
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
+    ports:                               
       - "8000:8000"
     networks:
       - custom
     depends_on:
-      - sqlite3
-  sqlite3:
-    image: jitesoft/sqlite:latest
-    stdin_open: true
-    tty: true
+      - postgresql
+
+  postgresql:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
     volumes:
       - ./users.db/:/root/app/users.db
-    networks:
-      - custom
+    ports:
+      - "5432:5432"
+
+
+#  sqlite3:
+#    image: jitesoft/sqlite:latest
+#    stdin_open: true
+#    tty: true
+#    volumes:
+#      - ./users.db/:/root/app/users.db
+#    networks:
+#      - custom
+
+
 networks:
   custom:
     driver: bridge
