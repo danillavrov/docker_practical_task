@@ -2,7 +2,7 @@ FROM python:3.12
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-COPY users.db users.db
+COPY library.db library.db
 COPY main.py main.py
 COPY models.py models.py
 EXPOSE 8000
