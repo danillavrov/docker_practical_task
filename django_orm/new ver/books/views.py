@@ -3,7 +3,8 @@ from rest_framework.views import APIView
 from books.models import Book, Category, BookOwner, BookAuthor, User, Author
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
-from django_lib_api.serializers import CategoriesSerializer, AuthorSerializer, BookAuthorSerializer, BookOwnerSerializer, BookSerializer, UserSerializer
+from django_lib_api.serializers import CategoriesSerializer, AuthorSerializer, BookAuthorSerializer, \
+    BookOwnerSerializer, BookSerializer, UserSerializer
 
 
 class TakeApiView(APIView):
@@ -11,6 +12,7 @@ class TakeApiView(APIView):
         a = Book.objects.all()
         b = User.objects.all()
         return Response({'books': BookSerializer(a, many=True).data, "users": UserSerializer(b, many=True).data})
+
     def post(self, request):
         user_id = request.data.get('user_id')
         book_id = request.data.get('book_id')
@@ -21,10 +23,12 @@ class TakeApiView(APIView):
         BookOwner.objects.create(user_id=user, book_id=book)
         return Response("success")
 
+
 class TakeBackApiView(APIView):
     def get(self, request):
         a = BookOwner.objects.all()
         return Response(BookOwnerSerializer(a, many=True).data)
+
     def post(self, request):
         user_id = request.data.get('user_id')
         book_id = request.data.get('book_id')
@@ -35,10 +39,12 @@ class TakeBackApiView(APIView):
         book.delete()
         return Response("success")
 
+
 class AddBookApiView(APIView):
     def get(self, request):
         a = Book.objects.all()
         return Response({'books': BookSerializer(a, many=True).data})
+
     def post(self, request):
         author = request.data.get('author').split()
         print(author)
@@ -48,4 +54,3 @@ class AddBookApiView(APIView):
         Category_id = Category.objects.get(category=category)
         Book.objects.create(author_id=Author_id, name=Name, category_id=Category_id)
         return Response("success")
-

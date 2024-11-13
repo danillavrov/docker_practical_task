@@ -21,33 +21,8 @@ from books.views import *
 from users.views import *
 from rest_framework import routers
 
-router = routers.SimpleRouter()
-# router.register(r'Book',BookViewSet)
-#
-# router1 = routers.SimpleRouter()
-# router1.register(r'Categories', CategoriesViewSet)
-#
-# router2 = routers.SimpleRouter()
-# router2.register(r'BookOwner', BookOwnerViewSet)
-#
-# router3 = routers.SimpleRouter()
-# router3.register(r'BookAuthor', BookAuthorViewSet)
-#
-# router4 = routers.SimpleRouter()
-# router4.register(r'User', UserViewSet)
-#
-# router5 = routers.SimpleRouter()
-# router5.register(r'Author', AuthorViewSet)
-
-
-
 urlpatterns = [
-    # path('api/v1/', include(router.urls)),
-    # path('api/v1/', include(router1.urls)),
-    # path('api/v1/', include(router2.urls)),
-    # path('api/v1/', include(router3.urls)),
-    # path('api/v1/', include(router4.urls)),
-    # path('api/v1/', include(router5.urls)),
+
     path('admin/', admin.site.urls),
     path('api/v1/Take', TakeApiView.as_view()),
     path('api/v1/TakeBack', TakeBackApiView.as_view()),
