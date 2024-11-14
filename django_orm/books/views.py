@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from books.models import Book, Category, BookOwner, BookAuthor, User, Author
-from rest_framework import generics, viewsets
+from books.models import Book, Category, BookOwner, User, Author
 from rest_framework.response import Response
-from django_lib_api.serializers import CategoriesSerializer, AuthorSerializer, BookAuthorSerializer, \
-    BookOwnerSerializer, BookSerializer, UserSerializer
+from django_lib_api.serializers import BookOwnerSerializer, BookSerializer, UserSerializer
 
 
 class TakeApiView(APIView):
@@ -16,8 +14,6 @@ class TakeApiView(APIView):
     def post(self, request):
         user_id = request.data.get('user_id')
         book_id = request.data.get('book_id')
-        print(book_id)
-        print(user_id)
         user = User.objects.get(id=user_id)
         book = Book.objects.get(id=book_id)
         BookOwner.objects.create(user_id=user, book_id=book)
@@ -32,9 +28,6 @@ class TakeBackApiView(APIView):
     def post(self, request):
         user_id = request.data.get('user_id')
         book_id = request.data.get('book_id')
-        print(book_id)
-        print(user_id)
-
         book = BookOwner.objects.get(book_id=book_id, user_id=user_id)
         book.delete()
         return Response("success")
@@ -47,7 +40,6 @@ class AddBookApiView(APIView):
 
     def post(self, request):
         author = request.data.get('author').split()
-        print(author)
         category = request.data.get('category')
         Name = request.data.get('name')
         Author_id = Author.objects.get(name=author[0])

@@ -1,8 +1,5 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
-from books.models import (Book, Category, BookOwner, BookAuthor, Author)
 from users.models import User
-from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from django_lib_api.serializers import UserSerializer
 

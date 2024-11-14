@@ -1,7 +1,5 @@
-from rest_framework.views import APIView
 from books.models import Book, Category, BookOwner, BookAuthor, User, Author
-from rest_framework import generics, viewsets
-from rest_framework.response import Response
+from rest_framework import viewsets
 from django_lib_api.serializers import CategoriesSerializer, AuthorSerializer, BookAuthorSerializer, \
     BookOwnerSerializer, BookSerializer, UserSerializer
 
