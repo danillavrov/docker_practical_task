@@ -1,5 +1,5 @@
 """
-URL configuration for django_lib_api project.
+URL configuration for lib_apiv2 project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,15 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from books.views import *
-from users.views import *
+from django.contrib import admin
+from django.urls import path
+from books.views import TakeBackApiView, TakeApiView, AddBookApiView, CreateUserApiView
 
 urlpatterns = [
-
     path('admin/', admin.site.urls),
     path('api/v1/take', TakeApiView.as_view()),
-    path('api/v1/takeBack', TakeBackApiView.as_view()),
+    path('api/v1/takeback', TakeBackApiView.as_view()),
     path('api/v1/addbook', AddBookApiView.as_view()),
     path('api/v1/createuser', CreateUserApiView.as_view()),
-
 ]

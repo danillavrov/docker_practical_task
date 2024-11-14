@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from books.models import Book, Category, BookOwner, User, Author
 from rest_framework.response import Response
-from django_lib_api.serializers import BookOwnerSerializer, BookSerializer, UserSerializer
+from lib_apiv2.serializers import BookOwnerSerializer, BookSerializer, UserSerializer
 
 
 class TakeApiView(APIView):
@@ -45,4 +44,15 @@ class AddBookApiView(APIView):
         Author_id = Author.objects.get(name=author[0])
         Category_id = Category.objects.get(category=category)
         Book.objects.create(author_id=Author_id, name=Name, category_id=Category_id)
+        return Response("success")
+
+class CreateUserApiView(APIView):
+    def get(self, request):
+        a = User.objects.all()
+        return Response(UserSerializer(a, many=True).data)
+
+    def post(self, request):
+        name = request.data.get('name')
+        email = request.data.get('email')
+        User.objects.create(name=name, email=email)
         return Response("success")
