@@ -1,7 +1,10 @@
 from rest_framework.views import APIView
 from books.models import Book, Category, BookOwner, User, Author
 from rest_framework.response import Response
-from lib_apiv2.serializers import BookOwnerSerializer, BookSerializer, UserSerializer
+
+from books.serializers import BookOwnerSerializer, BookSerializer, UserSerializer
+=======
+
 
 
 class TakeApiView(APIView):
