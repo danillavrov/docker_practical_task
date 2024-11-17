@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+
+  postgresql:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    ports:
+      - "5432:5432"
+
+  app:
+    container_name: "app"
+    image: api:5
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgres://user:password@postgresql:5432/database
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgresql
+    command: python manage.py runserver 0.0.0.0:8000
