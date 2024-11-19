@@ -9,7 +9,9 @@ services:
       POSTGRES_DB: ${DATABASE}
     command: [ "postgres", "-c", "log_statement=all", "-c", "log_destination=stderr" ]
     ports:
-      - "5432:5432"
+      - "54321:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "user" ]
       interval: 5s
@@ -19,17 +21,19 @@ services:
 
   app:
     container_name: "app"
-    image: api:8
+    image: api:10
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      DATABASE_URL: postgres://${MY_USER}:${PASSWORD}@postgresql:5432/${DATABASE}
+      DATABASE_URL: postgres://${MY_USER}:${PASSWORD}@postgresql:54321/${DATABASE}
     ports:
       - "8000:8000"
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
     command: >
       sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
-    
+volumes:
+  data:

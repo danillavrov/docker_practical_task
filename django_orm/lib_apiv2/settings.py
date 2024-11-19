@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'lib_apiv2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DATABASE"),
-        'USER': os.getenv("MY_USER"),
-        'PASSWORD': os.getenv("PASSWORD"),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get("DATABASE"),
+        'USER': os.environ.get("MY_USER"),
+        'PASSWORD': os.environ.get("PASSWORD"),
+        'HOST': 'postgresql',
+        'PORT': '54321',
     }
 }
 # Password validation
