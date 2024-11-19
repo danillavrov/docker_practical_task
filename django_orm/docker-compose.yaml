@@ -4,21 +4,27 @@ services:
   postgresql:
     image: postgres:13
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: database
-
+      POSTGRES_USER: ${MY_USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${DATABASE}
+    command: [ "postgres", "-c", "log_statement=all", "-c", "log_destination=stderr" ]
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "user" ]
+      interval: 5s
+      timeout: 30s
+      start_period: 40s
+      retries: 10
 
   app:
     container_name: "app"
-    image: api:5
+    image: api:8
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      DATABASE_URL: postgres://user:password@postgresql:5432/database
+      DATABASE_URL: postgres://${MY_USER}:${PASSWORD}@postgresql:5432/${DATABASE}
     ports:
       - "8000:8000"
     depends_on:
