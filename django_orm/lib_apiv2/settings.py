@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
-import dj_database_url
+from email.policy import default
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,9 +79,13 @@ WSGI_APPLICATION = 'lib_apiv2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}
+DATABASES = {'default':
+            {'NAME': os.getenv("DATABASE"),
+            'USER': os.getenv("MY_USER"),
+            'PASSWORD': os.getenv("PASSWORD"),
+            'HOST': 'postgresql',
+            'PORT': 5432,
+            'ENGINE': 'django.db.backends.postgresql_psycopg2'}}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
